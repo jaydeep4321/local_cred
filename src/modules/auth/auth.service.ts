@@ -49,7 +49,7 @@ export class AuthService {
     const token = await this.generateToken(result);
 
     // return the user and the token
-    return { user: result, token };
+    return { user: result, token: token };
   }
 
   private async generateToken(user) {
