@@ -1,10 +1,13 @@
 import { OnModuleInit, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
+  ConnectedSocket,
+  MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { platform } from 'os';
 import { Server, Socket } from 'socket.io';
 import { WsJwtGuard } from 'src/core/guards/ws-jwt.guard';
 import { SocketAuthMiddleware } from 'src/core/middleware/ws.middleware';
@@ -40,4 +43,24 @@ export class UserGateway implements OnModuleInit {
       content: payload,
     });
   }
+
+  @SubscribeMessage('join')
+  joinRoom(@MessageBody() payload: string, @ConnectedSocket() client: Socket) {
+    // return 'joined';
+    this.server.emit('joined', `you are joined with ${client.id} id`);
+    // return payload;
+  }
+
+  // handleConnection(client: Socket, room: string): any {
+  //   client.on('room', function (room) {
+  //     client.join(room);
+  //   });
+  // }
+
+  // @SubscribeMessage('message')
+  // setQuestion(data: {}): any {
+  //   this.server.in(data.room).emit('message', {
+  //     question: 'What do you know about Willam Shakespear?',
+  //   });
+  // }
 }
