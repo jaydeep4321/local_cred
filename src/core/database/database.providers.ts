@@ -2,6 +2,8 @@ import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
 import { User } from 'src/modules/users/user.entity';
+import { Wallet } from 'src/modules/wallet/entities/wallet.entity';
+import { Transaction } from 'src/modules/transaction/entities/transaction.entity';
 
 export const databaseProviders = [
   {
@@ -22,7 +24,7 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([User]);
+      sequelize.addModels([User, Wallet, Transaction]);
       await sequelize.sync();
       return sequelize;
     },

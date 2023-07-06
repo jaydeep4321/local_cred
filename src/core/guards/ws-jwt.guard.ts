@@ -24,7 +24,7 @@ export class WsJwtGuard implements CanActivate {
 
   static validateToken(client: Socket) {
     const { authorization } = client.handshake.headers;
-    console.log({ authorization });
+    // console.log({ authorization });
     const token: string = authorization.split(' ')[1];
     const payload = verify(token, 'random_secret_key');
     return payload;

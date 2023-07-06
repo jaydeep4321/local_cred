@@ -5,7 +5,9 @@ import {
   DataType,
   PrimaryKey,
   AutoIncrement,
+  BelongsToMany,
 } from 'sequelize-typescript';
+import { Transaction } from '../transaction/entities/transaction.entity';
 
 @Table({ timestamps: false })
 export class User extends Model<User> {
@@ -38,4 +40,10 @@ export class User extends Model<User> {
     allowNull: false,
   })
   phone: string;
+
+  @BelongsToMany(() => User, () => Transaction)
+  user: User[];
+
+  @BelongsToMany(() => User, () => Transaction)
+  receiver: User[];
 }
